@@ -9,5 +9,7 @@ export interface MandiPrice {
   latitude?: number
   longitude?: number
   distance?: number
+  mandiLocation?: string
 }
+
 

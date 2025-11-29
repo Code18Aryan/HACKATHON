@@ -79,13 +79,14 @@ export default function MandiPriceTable({ prices, userLocation }: MandiPriceTabl
                 {price.distance?.toFixed(1)} km
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm">
-                {price.latitude && price.longitude ? (
+                {(price.latitude && price.longitude) || price.mandiLocation ? (
                   <a
                     href={getDirectionsUrl(
-                      price.latitude,
-                      price.longitude,
+                      price.latitude || 0,
+                      price.longitude || 0,
                       userLocation?.lat,
-                      userLocation?.lng
+                      userLocation?.lng,
+                      price.mandiLocation || `${price.mandi_name}, ${price.district}, ${price.state}`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"

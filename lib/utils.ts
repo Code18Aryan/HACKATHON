@@ -27,17 +27,44 @@ function toRad(degrees: number): number {
 }
 
 /**
+ * Validate if coordinates are valid
+ */
+function isValidLat(lat: number): boolean {
+  return !isNaN(lat) && isFinite(lat) && lat >= -90 && lat <= 90 && lat !== 0
+}
+
+function isValidLng(lng: number): boolean {
+  return !isNaN(lng) && isFinite(lng) && lng >= -180 && lng <= 180 && lng !== 0
+}
+
+/**
  * Get Google Maps directions URL
  */
 export function getDirectionsUrl(
   destinationLat: number,
   destinationLng: number,
   userLat?: number,
-  userLng?: number
+  userLng?: number,
+  address?: string
 ): string {
-  if (userLat && userLng) {
-    return `https://www.google.com/maps/dir/${userLat},${userLng}/${destinationLat},${destinationLng}`
+  // Validate destination coordinates
+  const hasValidDestination = isValidLat(destinationLat) && isValidLng(destinationLng)
+
+  // If destination coordinates are invalid, use address search
+  if (!hasValidDestination && address) {
+    const encodedAddress = encodeURIComponent(address)
+    if (userLat && userLng && isValidLat(userLat) && isValidLng(userLng)) {
+      return `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${encodedAddress}&travelmode=driving`
+    }
+    return `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`
   }
+
+  // If user location is provided and valid, use directions with coordinates
+  if (userLat && userLng && isValidLat(userLat) && isValidLng(userLng)) {
+    return `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${destinationLat},${destinationLng}&travelmode=driving`
+  }
+
+  // Otherwise, use place search with coordinates
   return `https://www.google.com/maps/search/?api=1&query=${destinationLat},${destinationLng}`
 }
 
