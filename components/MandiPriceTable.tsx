@@ -1,6 +1,6 @@
 'use client'
 
-import { MandiPrice } from '@/app/page'
+import { MandiPrice } from '@/lib/types'
 import { getDirectionsUrl } from '@/lib/utils'
 
 interface MandiPriceTableProps {

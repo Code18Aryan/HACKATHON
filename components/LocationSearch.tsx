@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MandiPrice } from '@/app/page'
+import { MandiPrice } from '@/lib/types'
 import { calculateDistance } from '@/lib/utils'
 
 interface LocationSearchProps {
