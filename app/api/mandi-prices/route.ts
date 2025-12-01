@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
 
-const MANDI_API_KEY = '579b464db66ec23bdd0000019690f051ed194cd97481b30e543cb306'
-const MANDI_API_BASE = 'https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070'
+
 
 export async function GET(request: NextRequest) {
   try {
